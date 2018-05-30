@@ -1,0 +1,38 @@
+<ion-view hide-nav-bar="false" cache-view="true" view-title="{{paramurl|uppercase}}">
+  <ion-content>
+    <ion-item class="item item-divider item-assertive">
+      <h5 style="color: white;">ID Pelanggan/Nomor Meteran</h5>
+    </ion-item>
+    <form name="pulsaForm"  novalidate="true">
+      <div style="margin:0px;">
+        <div>
+          <label  class="item item-input">
+            <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+            <input type="tel" ng-model="datapembelianppob.MSISDN" maxlength="12" required placeholder="Masukkan ID Pelanggan/No.Meteran Disini">
+          </label>
+        </div>
+      </div>
+    
+    <ion-item class="item item-divider item-assertive" style="margin-top: 10px;">
+      <h5 style="color: white;">Pilih Nominal Token</h5>
+    </ion-item>
+    <div class="list">
+      <div class="item item-button-right">
+        <h6>Nominal:</h6>
+        <h5>5.000</h5>
+        <button class="button button-positive" style="min-width: 85px;top:13px;" ng-click="pilihnominal(5000)" ng-disabled="pulsaForm.$invalid">
+          <h5 style="color: white;">6.000</h5>
+        </button>
+      </div>
+      <div class="item item-button-right">
+        <h6>Nominal:</h6>
+        <h5>10.000</h5>
+        <button class="button button-positive" style="min-width: 85px;top:13px;" ng-click="pilihnominal(10000)" ng-disabled="pulsaForm.$invalid">
+          <h5 style="color: white;">11.000</h5>
+        </button>
+      </div>
+
+    </div>
+    </form>
+  </ion-content>
+</ion-view>

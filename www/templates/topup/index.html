@@ -1,0 +1,68 @@
+<ion-view view-title="TopUp">
+  <ion-content class="layerbackground">
+    <div class="list card no-padding" style="margin: 0px;">
+        <ion-item class="item" style="padding-left:0px;">
+          <div class="item-icon-left">
+            <i class="icon ion-bag"></i>
+            <h2>SISA SALDO</h2>
+            <h3>Rp 1.000.000</h3>
+          </div>
+        </ion-item>
+    </div>
+    <ion-item class="item item-divider item-balanced"></ion-item>
+    <ion-item ng-if="bisatopup.status">
+      <form name="topUpForm" novalidate="true">
+        <label class="item item-input item-stacked-label border-bottom">
+         <span class="input-label">Nominal Transfer</span>
+          <input type="tel" format="number" name="nominaltopup" ng-model="topUp.NOMINAL_TOPUP"  class="custom-success" placeholder="Nominal Yang Anda Ingin TopUp" required>
+          <p ng-show="topUpForm.nominaltopup.$error.required" style="color:red;">
+            Nominal Transfer Tidak Boleh Kosong
+          </p>
+        </label>
+        <label class="item item-input item-stacked-label border-bottom" ng-click="show()">
+         <span class="input-label">Rekening Tujuan</span>
+          <input type="text" name="rektujuan" ng-model="topUp.NAMA_BANK"  class="custom-success" placeholder="Rekening Tujuan Transfer" required ng-readonly="true" ng-disabled="true">
+          <p ng-show="topUpForm.rektujuan.$error.required" style="color:red;">
+            Rekening Tujuan Transfer Tidak Boleh Kosong
+          </p>
+        </label>
+        <label class="item item-input item-stacked-label border-bottom" ng-if="topUp.NAMA_BANK">
+         <span class="input-label">Nomor Rekening</span>
+          <input type="text" name="nomorrektujuan" ng-model="topUp.NOMOR_REKENING"  class="custom-success" placeholder="Rekening Tujuan Transfer" required ng-readonly="true" ng-disabled="true">
+        </label>
+        <label class="item item-input item-stacked-label border-bottom" ng-if="topUp.NAMA_BANK">
+         <span class="input-label">Pemilik Rekening</span>
+          <input type="text" name="pemilikrekening" ng-model="topUp.NAMA_PEMILIK"  class="custom-success"required ng-readonly="true" ng-disabled="true">
+        </label>
+
+        <button  class="button button-block button-calm rcorners2" ng-click="submittopup()" ng-disabled="topUpForm.$invalid">
+          TopUp
+        </button>
+      </form>
+    </ion-item>
+    <div class="list card" style="margin:0px;margin-bottom: 15px;" ng-if="!bisatopup.status">
+      <ion-item class="item item-remove-animate item-avatar item-icon-right item-stable" type="item-text-wrap" style="padding-left: 72px;">
+          <img ng-src="img/lg_topup.jpeg">
+          <h2>TOPUP SALDO</h2>
+          <h2>{{datatopupdalamproses.NOMINAL_TOPUP|number}}</h2>
+          <i class="icon ion-android-done-all"></i>
+      </ion-item>
+      <ion-item class="item-icon-left item-icon-right" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+        <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+          <h2>{{datatopupdalamproses.NAMA_BANK}} / {{datatopupdalamproses.NOMOR_REKENING}}</h2>
+      </ion-item>
+      <ion-item class="item-icon-left" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+        <i class="icon ion-calendar"></i>
+          <h2>{{datatopupdalamproses.NAMA_PEMILIK}}</h2>
+      </ion-item>
+      <ion-item class="item-icon-left" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+        <i class="icon ion-android-time"></i>
+          <h2>{{datatopupdalamproses.WAKTU_TOPUP}}</h2>
+      </ion-item>
+      
+    </div>
+    <ion-item class="item item-divider item-balanced" ng-if="!bisatopup.status" style="margin-top: -15px;">
+      <h2 class="text-center" style="color: white">TOPUP SALDO ANDA SEDANG DIPROSES</h2>
+    </ion-item>
+  </ion-content>
+</ion-view>

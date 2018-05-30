@@ -5,10 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic','ngCordova','starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
-  $ionicPlatform.ready(function() {
+.run(function($ionicPlatform,$rootScope,$location,$cordovaSQLite,StorageService,$ionicPopup) 
+{
+  $ionicPlatform.ready(function() 
+  {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -16,70 +18,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       cordova.plugins.Keyboard.disableScroll(true);
 
     }
-    if (window.StatusBar) {
+    if (window.StatusBar) 
+    {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });
+  $rootScope.db = window.openDatabase("doedoeppob.db", "1.0", "Your App", 2000000000000);
+  $cordovaSQLite.execute($rootScope.db, 'CREATE TABLE IF NOT EXISTS Tbl_Transaksi (ID_LOCAL INTEGER PRIMARY KEY AUTOINCREMENT,WAKTU_SAVE TEXT,TRANSAKSI_ID TEXT,NOMINAL_TRANSAKSI INTEGER,JENIS_TRANSAKSI TEXT,PROVIDER TEXT,NOMOR_HANDPHONE TEXT,STATUS_TRANSAKSI INTEGER)');
+  $cordovaSQLite.execute($rootScope.db, 'CREATE TABLE IF NOT EXISTS Tbl_Rekening (ID_LOCAL INTEGER PRIMARY KEY AUTOINCREMENT,NAMA_BANK TEXT,NOMOR_REKENING TEXT,NAMA_PEMILIK TEXT,KA_CABANG TEXT,STATUS_REKENING INTEGER)'); 
+  $cordovaSQLite.execute($rootScope.db, 'CREATE TABLE IF NOT EXISTS Tbl_TopUp (ID_LOCAL INTEGER PRIMARY KEY AUTOINCREMENT,WAKTU_TOPUP TEXT,NOMINAL_TOPUP INTEGER,NAMA_BANK TEXT,NOMOR_REKENING TEXT,NAMA_PEMILIK TEXT,STATUS_TOPUP INTEGER)'); 
+
+  $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) 
+  {
+      var token   = StorageService.get('advanced-profile');
+      if (!token) 
+      {
+        $location.path('/auth/login');
+        console.log();
+      }
+  });
+  
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  // Each tab has its own nav history stack:
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
-    })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })
-
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
-
-});

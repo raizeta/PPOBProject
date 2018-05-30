@@ -1,0 +1,31 @@
+<ion-view hide-nav-bar="false" view-title="PIN TRANSAKSI">
+  <ion-content>
+    <form name="emailkonfirmasiForm" role="form" novalidate="novalidate">
+      <div class="row" style="flex-wrap: wrap;">
+        <div class="col col-25">
+          <label class="item item-input">
+            <input type="tel"  ng-model="dataregistrasi.x1" required style="text-align: center;" id="x1" auto-tab-to="x2" minlength="1" maxlength="1" required>
+          </label>
+        </div>
+        <div class="col col-25">
+          <label class="item item-input">
+            <input type="tel"  ng-model="dataregistrasi.x2" required style="text-align: center;" id="x2" auto-tab-to="x3" minlength="1" maxlength="1" required>
+          </label>
+        </div>
+        <div class="col col-25">
+          <label class="item item-input">
+            <input type="tel"  ng-model="dataregistrasi.x3" required style="text-align: center;" id="x3" auto-tab-to="x4" minlength="1" maxlength="1" required>
+          </label>
+        </div>
+        <div class="col col-25">
+          <label class="item item-input">
+            <input type="tel"  ng-model="dataregistrasi.x4" required style="text-align: center;" id="x4" minlength="1" maxlength="1" required>
+          </label>
+        </div>
+      </div>
+      <button type="submit" class="button button-block button-positive" ng-click="submitotpmodal()" ng-disabled="emailkonfirmasiForm.$invalid">
+        Confirm
+      </button>
+    </form>
+  </ion-content>
+</ion-view>

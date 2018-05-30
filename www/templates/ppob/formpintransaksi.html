@@ -1,0 +1,33 @@
+<ion-view hide-nav-bar="false" view-title="PIN TRANSAKSI">
+  <ion-content>
+    <div class="list card no-padding" style="margin-bottom: 15px;">
+        <ion-item class="item item-remove-animate item-avatar item-icon-right item-stable" type="item-text-wrap" style="padding-left: 72px;">
+            <img ng-src="{{getimagefunction(datapembelianppob.JENIS_TRANSAKSI,datapembelianppob.PROVIDER)}}">
+            <p style="margin-top: 10px;font-size: 20px;">{{datapembelianppob.NOMOR_HANDPHONE}}</p>
+            <i class="icon ion-android-done-all"></i>
+        </ion-item>
+        
+        <ion-item class="item-icon-left item-icon-right" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+          <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+            <h2>{{datapembelianppob.JENIS_TRANSAKSI|uppercase}} </h2>
+        </ion-item>
+        <ion-item class="item-icon-left item-icon-right" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+          <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+            <h2>Rp {{datapembelianppob.NOMINAL_TRANSAKSI|number}}</h2>
+        </ion-item>
+    </div>
+    <div class="list card no-padding" style="margin-bottom: 15px;">
+      <ion-item>
+        <form name="topUpForm" novalidate="true">
+          <label class="item item-input item-stacked-label border-bottom">
+           <span class="input-label">Masukkan PIN Transaksi</span>
+            <input type="password" name="nominaltopup" ng-model="topUp.NOMINAL_TOPUP" class="custom-success" required>
+          </label>
+          <button  class="button button-block button-calm rcorners2" ng-disabled="topUpForm.$invalid" ng-click="verifikasiotp()">
+            Bayar
+          </button>
+        </form>
+    </ion-item>
+    </div>
+  </ion-content>
+</ion-view>

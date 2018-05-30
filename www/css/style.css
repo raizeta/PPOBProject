@@ -1,1 +1,73 @@
-/* Empty. Add your own CSS if you like */
+#login 
+{
+  background: teal;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}/* Empty. Add your own CSS if you like */
+.layerbackground
+{
+	background: #076585;
+	background: -webkit-linear-gradient(to top, #fff, #076585);
+    background: linear-gradient(to top, #fff, #076585);
+}
+
+.border-bottom
+{
+  border-top:0px;border-right:0px;border-left:0px;border-bottom: 0px;
+  margin-left: -15px;
+  margin-right: 5px;
+}
+
+input.custom-success {
+  border-bottom: 1px solid #1abc9c;
+  -webkit-transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  transition: all 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+  background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 99%, #1abc9c 1%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 99%, #1abc9c 1%);
+  background-repeat: no-repeat;
+}
+
+.item-icon-left ion-spinner 
+{
+  float: left;
+  margin-left: -4.2em;
+  margin-right: 1em;
+  margin-top: -0.2em;
+ }
+
+ .item-icon-left .title
+ {
+  margin-left: -25px;
+ }
+
+ .profile-item {
+  text-align: center;
+}
+
+.profile-picture {
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 3px;
+  border-radius: 100%;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+}
+
+.profile-picture img {
+  width: 100px;
+  border-radius: 100%;
+}
+
+.tabs-striped .tab-item.tab-item-active, .tabs-striped .tab-item.active, .tabs-striped .tab-item.activated 
+{
+  margin-top: -2px;
+  border-style: solid;
+  border-width: 0px 0 0 0;
+  border-color: #444;
+}

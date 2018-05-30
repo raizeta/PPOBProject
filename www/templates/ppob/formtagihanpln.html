@@ -1,0 +1,20 @@
+<ion-view hide-nav-bar="false" cache-view="true" view-title="{{paramurl|uppercase}}">
+  <ion-content>
+    <ion-item class="item item-divider item-assertive">
+      <h5 style="color: white;">ID Pelanggan/Nomor Meteran</h5>
+    </ion-item>
+    <form name="tagihanplnForm"  novalidate="true">
+        <div>
+          <label  class="item item-input">
+            <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+            <input type="tel" ng-model="tagihanpln.MSISDN" minlength="12" maxlength="12" required placeholder="Masukkan ID Pelanggan/No.Meteran Disini">
+          </label>
+        </div>
+        <div class="row">
+          <button type="submit" class="button button-block button-positive" ng-click="submittagihanpln()" ng-disabled="tagihanplnForm.$invalid">
+            Confirm
+          </button>
+        </div>
+    </form>
+  </ion-content>
+</ion-view>

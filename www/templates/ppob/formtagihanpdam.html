@@ -1,0 +1,30 @@
+<ion-view hide-nav-bar="false" cache-view="true" view-title="{{paramurl|uppercase}}">
+  <ion-content>
+    
+    <form name="pulsaForm"  novalidate="true">
+        <ion-item class="item item-divider item-assertive">
+          <h5 style="color: white;">ID Pelanggan/Nomor Meteran</h5>
+        </ion-item>
+        <div>
+          <label  class="item item-input">
+            <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+            <input type="tel" ng-model="datapembelianppob.MSISDN" maxlength="12" required ng-change="nomorteleponchange()" placeholder="Masukkan ID Pelanggan/No.Meteran Disini">
+          </label>
+        </div>
+        <ion-item class="item item-divider item-assertive">
+          <h5 style="color: white;">Pilih Regional PDAM</h5>
+        </ion-item>
+        <div>
+          <label  class="item item-input">
+            <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+            <input type="tel" ng-model="datapembelianppob.MSISDN" maxlength="12" required  placeholder="Pilih Regional Domisili">
+          </label>
+        </div>
+        <div class="row">
+          <button type="submit" class="button button-block button-positive" ng-click="submitotpmodal()" ng-disabled="emailkonfirmasiForm.$invalid">
+            Confirm
+          </button>
+        </div>
+    </form>
+  </ion-content>
+</ion-view>
