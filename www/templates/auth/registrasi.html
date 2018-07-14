@@ -10,7 +10,7 @@
                 </label>
                 <label class="item item-input item-stacked-label border-bottom">
                  <span class="input-label">Password</span>
-                  <input type="password" name="password" ng-model="newmember.PASSSWORD"  class="custom-success"required>
+                  <input type="password" name="password" ng-model="newmember.USER_PASSWORD"  class="custom-success" required>
                 </label>
                 <label class="item item-input item-stacked-label border-bottom">
                  <span class="input-label">Nama Lengkap</span>
@@ -21,7 +21,7 @@
                   <input type="text" name="nomorhandphone" ng-model="newmember.NOMOR_HANDPHONE"  class="custom-success" required>
                 </label>
 
-                <button  class="button button-block button-calm" ng-click="submittopup()" ng-disabled="registrasiForm.$invalid">
+                <button  class="button button-block button-calm" ng-click="registrasinewmember()" ng-disabled="registrasiForm.$invalid">
                   SignUp
                 </button>
               </form>

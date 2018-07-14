@@ -21,7 +21,7 @@
         <form name="topUpForm" novalidate="true">
           <label class="item item-input item-stacked-label border-bottom">
            <span class="input-label">Masukkan PIN Transaksi</span>
-            <input type="password" name="nominaltopup" ng-model="topUp.NOMINAL_TOPUP" class="custom-success" required>
+            <input type="password" name="nominaltopup" ng-model="topUp.NOMINAL_TOPUP" class="custom-success" minlength="4" maxlength="4" required>
           </label>
           <button  class="button button-block button-calm rcorners2" ng-disabled="topUpForm.$invalid" ng-click="verifikasiotp()">
             Bayar

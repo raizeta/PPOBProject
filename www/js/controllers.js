@@ -1,5 +1,5 @@
 angular.module('starter.controllers', [])
-.controller('LoginCtrl',function($scope,$state,$ionicLoading,$timeout,$ionicHistory,StorageService)
+.controller('LoginCtrl',function($scope,$state,$ionicLoading,$timeout,$ionicHistory,UsersFac,StorageService)
 {
     $scope.datauserlogin = {};
     $scope.loginsubmit = function()
@@ -10,16 +10,74 @@ angular.module('starter.controllers', [])
           hideOnStateChange:true,
           template: '<p class="item-icon-left"><span class="title">Loading</span><ion-spinner icon="lines"/></p>',
       });
-      $timeout(function() 
+      UsersFac.UserLogin($scope.datauserlogin)
+      .then(function(response)
       {
-          StorageService.set('advanced-profile',$scope.datauserlogin);
-          $ionicHistory.nextViewOptions({disableAnimate: true, disableBack: true});
-          $state.go('tab.ppob', {}, {reload: false});
-      }, 100);
+          if(response.length > 0)
+          {
+            $timeout(function() 
+            {
+                StorageService.set('advanced-profile',response[0]);
+                $ionicHistory.nextViewOptions({disableAnimate: true, disableBack: true});
+                $state.go('tab.ppob', {}, {reload: false});
+            }, 100);
+          }
+      },
+      function(error)
+      {
+          if(error == 'credential-wrong');
+          {
+              alert("Credential Wrong.Periksa Email dan Password Anda");
+          }
+      })
+      .finally(function()
+      {
+          $ionicLoading.hide();
+      });
     }
 })
+
+.controller('RegistrasiCtrl',function($scope,$state,$ionicLoading,$timeout,$ionicHistory,UsersFac,StorageService)
+{
+    $scope.newmember = {};
+    $scope.registrasinewmember = function()
+    {
+        UsersFac.CreateUsers($scope.newmember)
+        .then(function(response)
+        {
+            $timeout(function() 
+            {
+                StorageService.set('advanced-profile',$scope.newmember);
+                $ionicHistory.nextViewOptions({disableAnimate: true, disableBack: true});
+                $state.go('tab.ppob', {}, {reload: false});
+            }, 100);
+        },
+        function(error)
+        {
+            if(error.code === 6)
+            {
+                var err = error.message.split('.')[1].slice(0,-1);
+                if(err == 'ALAMAT_EMAIL')
+                {
+                    alert("Email Sudah Terdaftar.Silahkan Login");
+                }
+                else if(err == 'NOMOR_HANDPHONE')
+                {
+                    alert("Nomor Handphone Sudah Terdaftar.Silahkan Login");
+                } 
+            }
+            
+        })
+    } 
+})
+
 .controller('DashCtrl', function(NominalService,TransaksiFac,StorageService,$filter,$scope,$state,$timeout,$ionicHistory,$ionicLoading,$stateParams,$ionicModal,ProviderPrefixService) 
 {
+    $scope.datasaldo    = StorageService.get('data-saldo');
+    if(!$scope.datasaldo)
+    {
+      $scope.datasaldo = 0;
+    }
     $scope.screenbesar = false;
     $scope.datanominal = NominalService.GetNominalPulsa();
     $scope.gotoformisian = function(paramurl)
@@ -111,36 +169,42 @@ angular.module('starter.controllers', [])
     }
     $scope.pilihnominal = function(nilainominal,hargajual)
     {
-      var datapembelianppob                 = {};
-      datapembelianppob.NOMOR_HANDPHONE     = $scope.datapembelianppob.MSISDN;
-      datapembelianppob.PROVIDER            = $scope.datapembelianppob.PROVIDER;
-      datapembelianppob.NOMINAL_TRANSAKSI   = angular.copy(nilainominal);
-      datapembelianppob.HARGA_JUAL          = angular.copy(hargajual);
-      datapembelianppob.JENIS_TRANSAKSI     = $filter('uppercase')($scope.paramurl);
-      $ionicLoading.show
-      ({
-          noBackdrop:false,
-          hideOnStateChange:true,
-          template: '<p class="item-icon-left"><span class="title">Loading</span><ion-spinner icon="lines"/></p>',
-          duration:1000
-      })
-      .then(function()
-      {
-          $timeout(function() 
+        if($scope.datasaldo > nilainominal)
+        {
+          var datapembelianppob                 = {};
+          datapembelianppob.NOMOR_HANDPHONE     = $scope.datapembelianppob.MSISDN;
+          datapembelianppob.PROVIDER            = $scope.datapembelianppob.PROVIDER;
+          datapembelianppob.NOMINAL_TRANSAKSI   = angular.copy(nilainominal);
+          datapembelianppob.HARGA_JUAL          = angular.copy(hargajual);
+          datapembelianppob.JENIS_TRANSAKSI     = $filter('uppercase')($scope.paramurl);
+          $ionicLoading.show
+          ({
+              noBackdrop:false,
+              hideOnStateChange:true,
+              template: '<p class="item-icon-left"><span class="title">Loading</span><ion-spinner icon="lines"/></p>',
+              duration:1000
+          })
+          .then(function()
           {
-              StorageService.set('datapembelian',datapembelianppob);
-              $state.go('tab.ppob-detail-bayar', {'detail':$scope.paramurl}, {reload: false});
-          },1001);
-          
-      });
-    }
-
-    
+              $timeout(function() 
+              {
+                  StorageService.set('datapembelian',datapembelianppob);
+                  $state.go('tab.ppob-detail-bayar', {'detail':$scope.paramurl}, {reload: false});
+              },1001);
+              
+          });
+        }
+        else
+        {
+            alert("Saldo Tidak Mencukupi.Silahkan Melakukan TopUp");
+        }
+    }  
 })
 .controller('PPOBBayarCtrl',function($location,$scope,$timeout,$filter,$state,$stateParams,$ionicHistory,$ionicLoading,StorageService,TransaksiFac,ProviderPrefixService)
 {
-    $scope.datapembelianppob = StorageService.get('datapembelian');
-    $scope.getimagefunction = function(jenistransaksi,provider)
+    $scope.datasaldo          = StorageService.get('data-saldo');
+    $scope.datapembelianppob  = StorageService.get('datapembelian');
+    $scope.getimagefunction   = function(jenistransaksi,provider)
     {
       return ProviderPrefixService.GetGambarProvider(jenistransaksi,provider);
     }
@@ -170,10 +234,13 @@ angular.module('starter.controllers', [])
             TransaksiFac.CreateTransaksi(datatosave)
             .then(function(response)
             {
-                $timeout(function() {
+                $scope.datasaldo    = Number($scope.datasaldo) - Number($scope.datapembelianppob.NOMINAL_TRANSAKSI);
+                StorageService.set('data-saldo',$scope.datasaldo);
+                $timeout(function() 
+                {
                   $ionicHistory.nextViewOptions({disableAnimate: true, disableBack: true});
                   $state.go('tab.ppob', {}, {reload: false});
-                }, 10);
+                }, 1000);
                 
             },
             function(error)
@@ -205,44 +272,24 @@ angular.module('starter.controllers', [])
 
 
 })
-.controller('TopUpCtrl',function($scope,$ionicActionSheet,$ionicLoading,$timeout,$filter,RekeningFac,TopUpFac)
+.controller('TopUpCtrl',function($scope,$ionicActionSheet,$ionicLoading,$timeout,$filter,RekOwnerService,StorageService,TopUpFac)
 {
     $scope.$on('$ionicView.beforeEnter', function(parameters)
     {
-        RekeningFac.GetRekenings()
-        .then(function(response)
+        $scope.datasaldo    = StorageService.get('data-saldo');
+        if(!$scope.datasaldo)
         {
-            $scope.datarekening = response;
-            $scope.rekeningforactionsheet = [];
-            angular.forEach(response,function(value,key)
-            {
-                var data  = {};
-                data.text = '<i class="icon ion-share"></i>' + value.NAMA_BANK;
-                $scope.rekeningforactionsheet.push(data);
-            })
-        },
-        function(error)
+          $scope.datasaldo = 0;
+        }
+        $scope.datarekening = RekOwnerService.GetRekenings();
+        $scope.rekeningforactionsheet = [];
+        angular.forEach($scope.datarekening,function(value,key)
         {
-            console.log(error);
-        });
-
-        TopUpFac.GetTopUps()
-        .then(function(response)
-        {
-            if(response.length > 0)
-            {
-                $scope.bisatopup = {'status':false};
-                $scope.datatopupdalamproses = response[0];
-            }
-            else
-            {
-                $scope.bisatopup = {'status':true}; 
-            }
-        },
-        function(error)
-        {
-            console.log(response);
-        });
+            var data  = {};
+            data.text = '<i class="icon ion-share"></i>' + value.NAMA_BANK;
+            $scope.rekeningforactionsheet.push(data);
+        })
+        $scope.bisatopup = {'status':true};
     });
 
     $scope.topUp     = {};
@@ -276,8 +323,11 @@ angular.module('starter.controllers', [])
           TopUpFac.CreateTopUp($scope.topUp)
           .then(function(response)
           {
-              $scope.bisatopup = {'status':false};
-              $scope.datatopupdalamproses = $scope.topUp;
+              $scope.datasaldo = Number($scope.datasaldo) + Number(angular.copy($scope.topUp.NOMINAL_TOPUP)); 
+              StorageService.set('data-saldo',$scope.datasaldo);
+              $scope.topUp = {};
+              // $scope.bisatopup = {'status':false};
+              // $scope.datatopupdalamproses = $scope.topUp;
           },
           function(error)
           {
@@ -287,8 +337,24 @@ angular.module('starter.controllers', [])
       
     }
 })
-.controller('AccountCtrl', function($scope,RekeningFac,$ionicHistory,StorageService,$timeout,$ionicLoading,$location) 
+.controller('HistoryTopUpCtrl',function($scope,$ionicActionSheet,$ionicLoading,$timeout,$filter,TopUpFac)
 {
+    $scope.$on('$ionicView.beforeEnter', function(parameters)
+    {
+        TopUpFac.GetTopUps()
+        .then(function(response)
+        {
+            $scope.datatopup = response;
+        },
+        function(error)
+        {
+            console.log(response);
+        });
+    });
+})
+.controller('AccountCtrl', function($scope,RekeningFac,$ionicHistory,StorageService,$timeout,$ionicLoading,$location,StorageService) 
+{
+    $scope.userprofile = StorageService.get('advanced-profile');
     $scope.newrekening = {};
     $scope.submitnewrekening = function()
     {

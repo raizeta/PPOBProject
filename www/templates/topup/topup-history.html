@@ -1,0 +1,34 @@
+<ion-view view-title="History" hide-nav-bar="true">
+  <ion-content class="padding layerbackground">
+   <div class="list card" style="margin:0px;margin-bottom: 15px;" ng-repeat="topup in datatopup">
+      <ion-item class="item item-remove-animate item-avatar item-icon-right item-stable" type="item-text-wrap" style="padding-left: 72px;">
+          <img ng-src="img/lg_topup.jpeg">
+          <h2>TOPUP SALDO</h2>
+          <h2>{{topup.NOMINAL_TOPUP|number}}</h2>
+          <i class="icon ion-android-done-all"></i>
+      </ion-item>
+      <ion-item class="item-icon-left item-icon-right" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+        <i class="icon ion-android-phone-portrait placeholder-icon"></i>
+          <h2>{{topup.NAMA_BANK}} / {{topup.NOMOR_REKENING}}</h2>
+      </ion-item>
+      <ion-item class="item-icon-left" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+        <i class="icon ion-calendar"></i>
+          <h2>{{topup.NAMA_PEMILIK}}</h2>
+      </ion-item>
+      <ion-item class="item-icon-left" type="item-text-wrap" style="padding-left: 60px;left: 10px;">
+        <i class="icon ion-android-time"></i>
+          <h2>{{topup.WAKTU_TOPUP}}</h2>
+      </ion-item>
+      
+    </div>
+
+    <ion-list ng-if="datatopup.length == 0">
+      <div class="row not-found">
+          <div class="profile">
+              <img ng-src="img/lg_topup.jpeg"/>
+              <h3 style="color: #444;margin-top: -8vh;">Masih Kosong</h3>
+          </div>
+        </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -43,6 +43,7 @@ angular.module('starter')
           'registrasi-tab': 
           {
             templateUrl: 'templates/auth/registrasi.html',
+            controller:'RegistrasiCtrl'
           }
       }
   });
@@ -133,14 +134,40 @@ angular.module('starter')
         }
       }
   })
-  .state('tab.topup', {
+  .state('tab.topup', 
+  {
     url: '/topup',
+    abstract: true,
     views: {
       'tab-topup': {
         templateUrl: 'templates/topup/index.html',
-        controller: 'TopUpCtrl'
+        
       }
     }
+  })
+  .state('tab.topup.new', 
+  {
+      url: "/new",
+      views: 
+      {
+          'topup-new': 
+          {
+              templateUrl: "templates/topup/topup-new.html",
+              controller: 'TopUpCtrl'
+          }
+      },
+  })
+  .state('tab.topup.history', 
+  {
+      url: "/history",
+      views: 
+      {
+          'topup-history': 
+          {
+              templateUrl: "templates/topup/topup-history.html",
+              controller: 'HistoryTopUpCtrl'
+          }
+      },
   })
 
   .state('tab.account', {

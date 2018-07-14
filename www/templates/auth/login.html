@@ -10,14 +10,14 @@
                         <form name="loginForm" novalidate="true">
                             <div class="list list-inset label" style="margin-bottom:5px">
                                 <label class="item item-input">
-                                    <input type="text" placeholder="Alamat Email" ng-model="datauserlogin.username"  class="form-control" required>
+                                    <input type="text" placeholder="Alamat Email" ng-model="datauserlogin.ALAMAT_EMAIL"  class="form-control" required>
                                 </label>
                                 <label class="item item-input">
-                                     <input type="password" placeholder="Password" ng-model="datauserlogin.password" ui-show-password required="true">
+                                     <input type="password" placeholder="Password" ng-model="datauserlogin.USER_PASSWORD" ui-show-password required="true">
                                 </label>
                             </div>
                             <p style="float:right;color:rgba(255, 255, 255, 0.5);padding-top:10px;padding-bottom:10px;" ng-click="resetpassword()">
-                                Lupa Password?
+                                <!-- Lupa Password? -->
                             </p>
                             <button type="submit" class="button button-block button-balanced rcorners2" ng-disabled="loginForm.$invalid" style="border: 1px solid rgba(255, 255, 255, 0.8);" ng-click="loginsubmit()" >
                               Masuk

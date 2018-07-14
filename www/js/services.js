@@ -141,4 +141,31 @@ angular.module('starter.services', [])
    }
 })
 
+.service('RekOwnerService',function()
+{
+    var GetRekenings = function()
+    {
+      return [
+              {
+                'NAMA_BANK':'BANK BCA',
+                'NOMOR_REKENING':'604-402-1204',
+                'NAMA_PEMILIK':'RADUMTA SITEPU',
+                'KA_CABANG':'ALAM SUTERA',
+                'STATUS_REKENING':1
+              },
+              {
+                'NAMA_BANK':'BANK BRI',
+                'NOMOR_REKENING':'6041-4021-1204',
+                'NAMA_PEMILIK':'RADUMTA SITEPU',
+                'KA_CABANG':'ALAM SUTERA',
+                'STATUS_REKENING':1
+              },
+            ]
+    }
+
+    return {
+      GetRekenings:GetRekenings
+    }
+})
+
 

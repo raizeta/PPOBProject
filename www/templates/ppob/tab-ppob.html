@@ -1,11 +1,11 @@
 <ion-view view-title="Dashboard">
   <ion-content class="layerbackground">
     <div class="list card no-padding" style="margin: 0px;">
-        <ion-item class="item" style="padding-left:0px;" href="#/tab/topup">
+        <ion-item class="item" style="padding-left:0px;" href="#/tab/topup/new">
           <div class="item-icon-left">
             <i class="icon ion-bag"></i>
             <h2>SISA SALDO</h2>
-            <h3>Rp 1.000.000</h3>
+            <h3>Rp {{datasaldo|number}}</h3>
           </div>
           <div class="item-icon-right" >
               <i class="icon" style="font-size: 16px;">ISI SALDO</i>
@@ -16,7 +16,7 @@
       <h5 style="color: white"></h5>
     </ion-item> 
     <style>
-      h2 > i {font-size: 28px;color: teal;}
+      h2 > i {font-size: 38px;color: teal;}
     </style>
   <div class="row" style="flex-wrap: wrap;">
       <div class="col col-33">
@@ -76,63 +76,6 @@
     </div>
     <ion-item class="item item-divider item-balanced">
       <h5 style="color: white"></h5>
-    </ion-item>
-    <div class="row" style="flex-wrap: wrap;">
-      <div class="col col-33">
-          <div class="list card" style="margin:0px;" ng-click="gotoformisian('pulsareguler')">
-            <div class="item item-devider" style="padding: 10px;">
-              <h2 style="text-align: center;"><i class="icon ion-ipad"></i></h2>
-              <h5 style="text-align: center;">Pulsa Seluler</h5>
-            </div>
-          </div>  
-      </div>
-      <div class="col col-33">
-          <div class="list card" style="margin:0px;" ng-click="gotoformisian('tokenpln')">
-            <div class="item item-devider" style="padding: 10px;">
-              <h2 style="text-align: center;">
-                <i class="icon ion-ios-bolt-outline"></i>
-              </h2>
-              <h5 style="text-align: center;">Token PLN</h5>
-            </div>
-          </div>  
-      </div>
-      <div class="col col-33">
-          <div class="list card" style="margin:0px;" ng-click="gotoformisian('tagihanpln')">
-            <div class="item item-devider" style="padding: 10px;">
-              <h2 style="text-align: center;"><i class="icon ion-android-bulb"></i></h2>
-              <h5 style="text-align: center;">Tagihan PLN</h5>
-            </div>
-          </div>  
-      </div>
-      <div class="col col-33">
-          <div class="list card" style="margin:0px;" ng-click="gotoformisian('tagihanpdam')">
-            <div class="item item-devider" style="padding: 10px;">
-              <h2 style="text-align: center;"><i class="icon ion-paintbucket"></i></h2>
-              <h5 style="text-align: center;">PDAM</h5>
-            </div>
-          </div>  
-      </div>
-      <div class="col col-33">
-          <div class="list card" style="margin:0px;">
-            <div class="item item-devider" style="padding: 10px;">
-              <h2 style="text-align: center;"><i class="icon ion-bonfire"></i></h2>
-              <h6 style="text-align: center;">PGN</h6>
-            </div>
-          </div>  
-      </div>
-
-      <div class="col col-33">
-          <div class="list card" style="margin:0px;">
-            <div class="item item-devider" style="padding: 10px;">
-              <h2 style="text-align: center;">
-                <i class="icon ion-ios-medkit-outline"></i>
-              </h2>
-              <h5 style="text-align: center;">BPJS Kesehatan</h5>
-            </div>
-          </div>  
-      </div>
-      
-    </div>
-    
+    </ion-item>    
   </ion-content>
 </ion-view>

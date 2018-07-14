@@ -107,8 +107,6 @@ angular.module('starter')
         return deferred.promise; 
     }
 
-    
-    
     return{
             GetRekenings:GetRekenings,
             CreateRekening:CreateRekening,
@@ -170,5 +168,57 @@ angular.module('starter')
     return{
             GetTopUps:GetTopUps,
             CreateTopUp:CreateTopUp
+        }
+})
+.factory('UsersFac',function($rootScope,$q,$cordovaSQLite,UtilService)
+{
+    var UserLogin = function (parameter)
+    {
+        var deferred    = $q.defer();
+        var query       = 'SELECT * FROM Tbl_Users WHERE ALAMAT_EMAIL = ? AND USER_PASSWORD = ?';
+        $cordovaSQLite.execute($rootScope.db,query,[parameter.ALAMAT_EMAIL,parameter.USER_PASSWORD])
+        .then(function(result) 
+        {
+            if(result.rows.length > 0)
+            {
+                var response = UtilService.SqliteToArray(result);
+                deferred.resolve(response);
+            }
+            else
+            {
+                deferred.reject("credential-wrong");
+            }
+        },
+        function (error)
+        {
+            deferred.reject(error); 
+        });
+        return deferred.promise;
+    }
+
+    var CreateUsers = function (datatosave)
+    {
+        var deferred            = $q.defer();
+        var ALAMAT_EMAIL        = datatosave.ALAMAT_EMAIL;
+        var USER_PASSWORD       = datatosave.USER_PASSWORD;
+        var NOMOR_HANDPHONE     = datatosave.NOMOR_HANDPHONE;
+        var NAMA_LENGKAP        = datatosave.NAMA_LENGKAP;
+
+        var isitable            = [ALAMAT_EMAIL,USER_PASSWORD,NOMOR_HANDPHONE,NAMA_LENGKAP]
+        var query               = 'INSERT INTO Tbl_Users (ALAMAT_EMAIL,USER_PASSWORD,NOMOR_HANDPHONE,NAMA_LENGKAP) VALUES (?,?,?,?)';
+        $cordovaSQLite.execute($rootScope.db,query,isitable)
+        .then(function(result) 
+        {
+            deferred.resolve(result);
+        },
+        function (error)
+        {
+            deferred.reject(error);
+        });
+        return deferred.promise; 
+    }
+    return{
+            UserLogin:UserLogin,
+            CreateUsers:CreateUsers
         }
 });
